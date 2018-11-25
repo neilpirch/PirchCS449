@@ -1,6 +1,9 @@
 package com.neilpirch.grammarfactory;
 
-public class QuizQuestion {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class QuizQuestion implements Parcelable {
 
 
     private int level;
@@ -25,6 +28,46 @@ public class QuizQuestion {
         this.option4 = option4;
         this.answerNum = answerNum;
     }
+
+    protected QuizQuestion(Parcel in) {
+        level = in.readInt();
+        category = in.readString();
+        question = in.readString();
+        option1 = in.readString();
+        option2 = in.readString();
+        option3 = in.readString();
+        option4 = in.readString();
+        answerNum = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(level);
+        dest.writeString(category);
+        dest.writeString(question);
+        dest.writeString(option1);
+        dest.writeString(option2);
+        dest.writeString(option3);
+        dest.writeString(option4);
+        dest.writeInt(answerNum);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<QuizQuestion> CREATOR = new Creator<QuizQuestion>() {
+        @Override
+        public QuizQuestion createFromParcel(Parcel in) {
+            return new QuizQuestion(in);
+        }
+
+        @Override
+        public QuizQuestion[] newArray(int size) {
+            return new QuizQuestion[size];
+        }
+    };
 
     public int getLevel() {
         return level;

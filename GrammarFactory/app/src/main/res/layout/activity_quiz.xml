@@ -9,7 +9,7 @@
     tools:context=".QuizActivity">
 
     <TextView
-        android:id="@+id/text_view_score_pos"
+        android:id="@+id/text_view_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Score: 0"
@@ -19,18 +19,30 @@
         android:freezesText="true"/>
 
     <TextView
-        android:id="@+id/text_view_question_count_pos"
+        android:id="@+id/text_view_question_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Question: 1/x"
         android:textColor="@android:color/black"
-        app:layout_constraintStart_toStartOf="@+id/text_view_score_pos"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_score_pos"
+        app:layout_constraintStart_toStartOf="@+id/text_view_score"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_score"
         android:freezesText="true"/>
 
     <TextView
-        android:id="@+id/text_view_countdown_pos"
+        android:id="@+id/text_view_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/text_view_question_count"
+        android:text="Difficulty: "
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/text_view_score"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_score"
+        android:freezesText="true"/>
+
+    <TextView
+        android:id="@+id/text_view_countdown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:30"
@@ -41,7 +53,7 @@
         android:freezesText="true"/>
 
     <TextView
-        android:id="@+id/text_view_question_pos"
+        android:id="@+id/text_view_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -49,18 +61,18 @@
         android:textAlignment="viewStart"
         android:textColor="@android:color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/radio_group_pos"
+        app:layout_constraintBottom_toTopOf="@+id/radio_group"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:freezesText="true"/>
 
     <RadioGroup
-        android:id="@+id/radio_group_pos"
+        android:id="@+id/radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_confirm_pos"
+        app:layout_constraintBottom_toTopOf="@+id/button_confirm"
         app:layout_constraintStart_toStartOf="parent">
 
         <RadioButton
@@ -94,7 +106,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/button_confirm_pos"
+        android:id="@+id/button_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

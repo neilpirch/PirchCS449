@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 public class QuizActivity extends AppCompatActivity {
@@ -32,6 +31,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView textViewQuestion;
     private TextView textViewScore;
     private TextView textViewQuestionCount;
+    private TextView textViewDifficulty;
     private TextView textViewCountdown;
     private RadioGroup radioGroup;
     private RadioButton rb1, rb2, rb3, rb4;
@@ -59,23 +59,29 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        textViewQuestion = findViewById(R.id.text_view_question_pos);
-        textViewScore = findViewById(R.id.text_view_score_pos);
-        textViewQuestionCount = findViewById(R.id.text_view_question_count_pos);
-        textViewCountdown = findViewById(R.id.text_view_countdown_pos);
-        radioGroup = findViewById(R.id.radio_group_pos);
+        textViewQuestion = findViewById(R.id.text_view_question);
+        textViewScore = findViewById(R.id.text_view_score);
+        textViewQuestionCount = findViewById(R.id.text_view_question_count);
+        textViewDifficulty = findViewById(R.id.text_view_difficulty);
+        textViewCountdown = findViewById(R.id.text_view_countdown);
+        radioGroup = findViewById(R.id.radio_group);
         rb1 = findViewById(R.id.radio_button1);
         rb2 = findViewById(R.id.radio_button2);
         rb3 = findViewById(R.id.radio_button3);
         rb4 = findViewById(R.id.radio_button4);
-        buttonConfirmNext = findViewById(R.id.button_confirm_pos);
+        buttonConfirmNext = findViewById(R.id.button_confirm);
 
         textColorDefaultRb = rb1.getTextColors();
         textColorDefaultCd = textViewCountdown.getTextColors();
 
+        Intent intent = getIntent();
+        String difficulty = intent.getStringExtra(StartingScreenActivity.EXTRA_DIFFICULTY);
+
+        textViewDifficulty.setText("Difficulty: " + difficulty);
+
         if (savedInstanceState == null) {
             QuizDBHelper dbHelper = new QuizDBHelper(this);
-            quizQuestionList = dbHelper.getAllQuestions();
+            quizQuestionList = dbHelper.getQuestions(difficulty);
             questionCountTotal = quizQuestionList.size();
             Collections.shuffle(quizQuestionList);
 

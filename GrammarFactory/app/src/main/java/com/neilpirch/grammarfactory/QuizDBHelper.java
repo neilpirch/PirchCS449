@@ -35,7 +35,8 @@ public class QuizDBHelper extends SQLiteOpenHelper {
                 QuestionTable.COLUMN_OPTION2 + " TEXT, " +
                 QuestionTable.COLUMN_OPTION3 + " TEXT, " +
                 QuestionTable.COLUMN_OPTION4 + " TEXT, " +
-                QuestionTable.COLUMN_ANSWER_NUM + " INTEGER" +
+                QuestionTable.COLUMN_ANSWER_NUM + " INTEGER, " +
+                QuestionTable.COLUMN_DIFFICULTY + " TEXT, " +
                 ")";
 
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
@@ -51,19 +52,19 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     private void fillQuestionTable() {
         QuizQuestion q1 = new QuizQuestion(1, "POS",
                 "In the following sentence, what part of speech is the word cat? \n" +
-                        "The black cat quietly ate his dinner.", "noun", "verb", "adjective", "adverb", 1);
+                        "The black cat quietly ate his dinner.", "noun", "verb", "adjective", "adverb", 1, QuizQuestion.DIFFICULTY_EASY);
         QuizQuestion q2 = new QuizQuestion(1, "POS",
                 "In the following sentence, what part of speech is the word black? \n" +
-                        "The black cat quietly ate his dinner.", "noun", "verb", "adjective", "adverb", 3);
+                        "The black cat quietly ate his dinner.", "noun", "verb", "adjective", "adverb", 3, QuizQuestion.DIFFICULTY_EASY);
         QuizQuestion q3 = new QuizQuestion(1, "POS",
                 "In the following sentence, what part of speech is the word quietly? \n" +
-                        "The black cat quietly ate his dinner.", "noun", "verb", "adjective", "adverb", 4);
+                        "The black cat quietly ate his dinner.", "noun", "verb", "adjective", "adverb", 4, QuizQuestion.DIFFICULTY_MEDIUM);
         QuizQuestion q4 = new QuizQuestion(1, "POS",
                 "In the following sentence, what part of speech is the word ate? \n" +
-                        "The black cat quietly ate his dinner.", "noun", "verb", "adjective", "adverb", 2);
+                        "The black cat quietly ate his dinner.", "noun", "verb", "adjective", "adverb", 2, QuizQuestion.DIFFICULTY_MEDIUM);
         QuizQuestion q5 = new QuizQuestion(1, "POS",
                 "In the following sentence, what part of speech is the word dinner? \n" +
-                        "The black cat quietly ate his dinner.", "noun", "verb", "adjective", "adverb", 1);
+                        "The black cat quietly ate his dinner.", "noun", "verb", "adjective", "adverb", 1, QuizQuestion.DIFFICULTY_HARD);
         addQuestion(q1);
         addQuestion(q2);
         addQuestion(q3);
@@ -81,6 +82,7 @@ public class QuizDBHelper extends SQLiteOpenHelper {
         cv.put(QuestionTable.COLUMN_OPTION3, question.getOption3());
         cv.put(QuestionTable.COLUMN_OPTION4, question.getOption4());
         cv.put(QuestionTable.COLUMN_ANSWER_NUM, question.getAnswerNum());
+        cv.put(QuestionTable.COLUMN_DIFFICULTY, question.getDifficulty());
         db.insert(QuestionTable.TABLE_NAME, null, cv);
     }
 
@@ -100,6 +102,33 @@ public class QuizDBHelper extends SQLiteOpenHelper {
                 question.setOption3(c.getString(c.getColumnIndex(QuestionTable.COLUMN_OPTION3)));
                 question.setOption4(c.getString(c.getColumnIndex(QuestionTable.COLUMN_OPTION4)));
                 question.setAnswerNum(c.getInt(c.getColumnIndex(QuestionTable.COLUMN_ANSWER_NUM)));
+                question.setDifficulty(c.getString(c.getColumnIndex(QuestionTable.COLUMN_DIFFICULTY)));
+                questionList.add(question);
+            } while(c.moveToNext());
+        }
+        c.close();
+        return questionList;
+    }
+
+    public ArrayList<QuizQuestion> getQuestions(String difficulty) {
+        ArrayList<QuizQuestion> questionList = new ArrayList<>();
+        db = getReadableDatabase();
+        String[] selectionArgs = new String[]{difficulty};
+        Cursor c = db.rawQuery("SELECT * FROM " + QuestionTable.TABLE_NAME +
+                " WHERE " + QuestionTable.COLUMN_DIFFICULTY + " = ?", selectionArgs);
+
+        if (c.moveToFirst()) {
+            do {
+                QuizQuestion question = new QuizQuestion();
+                question.setLevel(c.getInt(c.getColumnIndex(QuestionTable.COLUMN_LEVEL)));
+                question.setCategory(c.getString(c.getColumnIndex(QuestionTable.COLUMN_CATEGORY)));
+                question.setQuestion(c.getString(c.getColumnIndex(QuestionTable.COLUMN_QUESTION)));
+                question.setOption1(c.getString(c.getColumnIndex(QuestionTable.COLUMN_OPTION1)));
+                question.setOption2(c.getString(c.getColumnIndex(QuestionTable.COLUMN_OPTION2)));
+                question.setOption3(c.getString(c.getColumnIndex(QuestionTable.COLUMN_OPTION3)));
+                question.setOption4(c.getString(c.getColumnIndex(QuestionTable.COLUMN_OPTION4)));
+                question.setAnswerNum(c.getInt(c.getColumnIndex(QuestionTable.COLUMN_ANSWER_NUM)));
+                question.setDifficulty(c.getString(c.getColumnIndex(QuestionTable.COLUMN_DIFFICULTY)));
                 questionList.add(question);
             } while(c.moveToNext());
         }

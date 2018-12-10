@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class QuizQuestion implements Parcelable {
+    public static final String DIFFICULTY_EASY = "Easy";
+    public static final String DIFFICULTY_MEDIUM = "Medium";
+    public static final String DIFFICULTY_HARD = "Hard";
 
 
     private int level;
@@ -14,11 +17,14 @@ public class QuizQuestion implements Parcelable {
     private String option3;
     private String option4;
     private int answerNum;
+    private String difficulty;
 
     public QuizQuestion() {
     }
 
-    public QuizQuestion(int level, String category, String question, String option1, String option2, String option3, String option4, int answerNum) {
+    public QuizQuestion(int level, String category, String question, String option1,
+                        String option2, String option3, String option4,
+                        int answerNum, String difficulty) {
         this.level = level;
         this.category = category;
         this.question = question;
@@ -27,6 +33,7 @@ public class QuizQuestion implements Parcelable {
         this.option3 = option3;
         this.option4 = option4;
         this.answerNum = answerNum;
+        this.difficulty = difficulty;
     }
 
     protected QuizQuestion(Parcel in) {
@@ -38,6 +45,7 @@ public class QuizQuestion implements Parcelable {
         option3 = in.readString();
         option4 = in.readString();
         answerNum = in.readInt();
+        difficulty = in.readString();
     }
 
     @Override
@@ -50,6 +58,7 @@ public class QuizQuestion implements Parcelable {
         dest.writeString(option3);
         dest.writeString(option4);
         dest.writeInt(answerNum);
+        dest.writeString(difficulty);
     }
 
     @Override
@@ -130,5 +139,17 @@ public class QuizQuestion implements Parcelable {
 
     public void setAnswerNum(int answerNum) {
         this.answerNum = answerNum;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public static String[] getAllDifficultyLevels() {
+        return new String[]{DIFFICULTY_EASY, DIFFICULTY_MEDIUM, DIFFICULTY_HARD};
     }
 }

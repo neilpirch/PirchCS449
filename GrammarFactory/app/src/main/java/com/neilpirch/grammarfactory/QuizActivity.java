@@ -31,6 +31,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView textViewQuestion;
     private TextView textViewScore;
     private TextView textViewQuestionCount;
+    private TextView textViewCategory;
     private TextView textViewDifficulty;
     private TextView textViewCountdown;
     private RadioGroup radioGroup;
@@ -62,6 +63,7 @@ public class QuizActivity extends AppCompatActivity {
         textViewQuestion = findViewById(R.id.text_view_question);
         textViewScore = findViewById(R.id.text_view_score);
         textViewQuestionCount = findViewById(R.id.text_view_question_count);
+        textViewCategory = findViewById(R.id.text_view_category);
         textViewDifficulty = findViewById(R.id.text_view_difficulty);
         textViewCountdown = findViewById(R.id.text_view_countdown);
         radioGroup = findViewById(R.id.radio_group);
@@ -75,13 +77,16 @@ public class QuizActivity extends AppCompatActivity {
         textColorDefaultCd = textViewCountdown.getTextColors();
 
         Intent intent = getIntent();
+        int categoryID = intent.getIntExtra(StartingScreenActivity.EXTRA_CATEGORY_ID, 0);
+        String categoryName = intent.getStringExtra(StartingScreenActivity.EXTRA_CATEGORY_NAME);
         String difficulty = intent.getStringExtra(StartingScreenActivity.EXTRA_DIFFICULTY);
 
+        textViewCategory.setText("Category: " + categoryName);
         textViewDifficulty.setText("Difficulty: " + difficulty);
 
         if (savedInstanceState == null) {
-            QuizDBHelper dbHelper = new QuizDBHelper(this);
-            quizQuestionList = dbHelper.getQuestions(difficulty);
+            QuizDBHelper dbHelper = QuizDBHelper.getInstance(this);
+            quizQuestionList = dbHelper.getQuestions(categoryID, difficulty);
             questionCountTotal = quizQuestionList.size();
             Collections.shuffle(quizQuestionList);
 
@@ -174,7 +179,7 @@ public class QuizActivity extends AppCompatActivity {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
 
-        String timeFormatted = String.format(Locale.getDefault(), "$02d:%02d", minutes, seconds);
+        String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
         textViewCountdown.setText(timeFormatted);
 

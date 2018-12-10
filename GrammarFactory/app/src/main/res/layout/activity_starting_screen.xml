@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Spinner
-        android:id="@+id/spinner_difficulty"
+        android:id="@+id/spinner_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button_start_quiz"
@@ -52,6 +52,18 @@
         app:layout_constraintRight_toRightOf="@+id/button_start_quiz"
         app:layout_constraintLeft_toLeftOf="@id/button_start_quiz"
         app:layout_constraintTop_toBottomOf="@+id/button_start_quiz"
+        tools:layout_editor_absoluteX="104dp" />
+
+    <Spinner
+        android:id="@+id/spinner_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_start_quiz"
+        android:layout_alignStart="@+id/button_start_quiz"
+        android:layout_marginTop="8dp"
+        app:layout_constraintRight_toRightOf="@+id/button_start_quiz"
+        app:layout_constraintLeft_toLeftOf="@id/button_start_quiz"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_category"
         tools:layout_editor_absoluteX="104dp" />
 
 

@@ -30,16 +30,28 @@
         android:freezesText="true"/>
 
     <TextView
+        android:id="@+id/text_view_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_question_count"
+        android:layout_marginTop="8dp"
+        android:freezesText="true"
+        android:text="Category: "
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/text_view_score"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_question_count" />
+
+    <TextView
         android:id="@+id/text_view_difficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_category"
         android:layout_marginTop="8dp"
-        android:layout_below="@+id/text_view_question_count"
+        android:freezesText="true"
         android:text="Difficulty: "
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="@+id/text_view_score"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_score"
-        android:freezesText="true"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_view_category" />
 
     <TextView
         android:id="@+id/text_view_countdown"

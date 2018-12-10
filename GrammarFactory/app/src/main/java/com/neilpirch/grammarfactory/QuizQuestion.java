@@ -9,6 +9,7 @@ public class QuizQuestion implements Parcelable {
     public static final String DIFFICULTY_HARD = "Hard";
 
 
+    private int id;
     private int level;
     private String category;
     private String question;
@@ -18,13 +19,14 @@ public class QuizQuestion implements Parcelable {
     private String option4;
     private int answerNum;
     private String difficulty;
+    private int categoryID;
 
     public QuizQuestion() {
     }
 
     public QuizQuestion(int level, String category, String question, String option1,
                         String option2, String option3, String option4,
-                        int answerNum, String difficulty) {
+                        int answerNum, String difficulty, int categoryID) {
         this.level = level;
         this.category = category;
         this.question = question;
@@ -34,9 +36,11 @@ public class QuizQuestion implements Parcelable {
         this.option4 = option4;
         this.answerNum = answerNum;
         this.difficulty = difficulty;
+        this.categoryID = categoryID;
     }
 
     protected QuizQuestion(Parcel in) {
+        id = in.readInt();
         level = in.readInt();
         category = in.readString();
         question = in.readString();
@@ -46,10 +50,12 @@ public class QuizQuestion implements Parcelable {
         option4 = in.readString();
         answerNum = in.readInt();
         difficulty = in.readString();
+        categoryID = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeInt(level);
         dest.writeString(category);
         dest.writeString(question);
@@ -59,6 +65,7 @@ public class QuizQuestion implements Parcelable {
         dest.writeString(option4);
         dest.writeInt(answerNum);
         dest.writeString(difficulty);
+        dest.writeInt(categoryID);
     }
 
     @Override
@@ -93,6 +100,15 @@ public class QuizQuestion implements Parcelable {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getQuestion() {
         return question;
     }
@@ -147,6 +163,14 @@ public class QuizQuestion implements Parcelable {
 
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public int getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
     }
 
     public static String[] getAllDifficultyLevels() {
